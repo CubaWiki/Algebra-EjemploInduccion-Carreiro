@@ -1,0 +1,186 @@
+\documentclass[a4paper,10pt]{article}
+
+\usepackage{amsmath}
+\usepackage[spanish]{babel}
+
+\setlength{\parskip}{3pt plus 2pt}
+\setlength{\parindent}{20pt}
+\setlength{\oddsidemargin}{0.5cm}
+\setlength{\evensidemargin}{0.5cm}
+\setlength{\marginparsep}{0.75cm}
+\setlength{\marginparwidth}{2.5cm}
+\setlength{\marginparpush}{1.0cm}
+\setlength{\textwidth}{150mm}
+
+\begin{document}
+
+\begin{center}
+Sumatoria finita cuadr\'atica \\
+Facundo Mat\'ias Carreiro \\
+\today
+\end{center}
+
+\section{Motivaci\'on}
+Cuando estaba resolviendo un ejercicio de Probabilidad y Estad\'istica me
+top\'e con un n\'umero que necesitaba calcular, \'este era:
+\begin{displaymath}
+\sum_{k=0}^{5} k^2 = 1^2 + 2^2 + 3^2 + 4^2 + 5^2 = 55
+\end{displaymath}
+En este caso todo era facil porque simplemente deb\'ia sumar los $5$ primeros
+n\'umeros naturales pero eso no ser\'ia tan f\'acil si necesitara la suma
+hasta $50$ por ejemplo. Lo que me hizo pensar: habr\'a una f\'ormula general? \\
+Durante varios d\'ias trat\'e de resolverlo haciendo cambios de indice y
+tratando de buscar alg\'un tipo de analog\'ia con respecto a la muy conocida
+f\'ormula de Gauss para sumar los primeros $n$ n\'umeros:
+\begin{equation}
+\sum_{k=0}^{n} k = \frac{n(n+1)}{2}
+\end{equation}
+pero los cambios de variables cuadr\'aticas no se pod\'ian aplicar en la
+sumatoria (o al menos no logr\'e descubrir como).
+
+\section{B\'usqueda de patrones}
+Para encontrar una f\'ormula general para el caso cuadr\'atico me pareci\'o
+buena idea hacerme una tablita con los primeros casos llamando $g(n)$ al
+resultado de aplicar la f\'ormula de Gauss al n\'umero n y $f(n)$ a la
+sumatoria cuadr\'atica que intentaba resolver:
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+$n$ & $g(n)$ & $n^2$ & $f(n)$ \\
+\hline
+1 & 1 & 1 & 1 \\
+\hline
+2 & 3 & 4 & 5 \\
+\hline
+3 & 6 & 9 & 14 \\
+\hline
+4 & 10 & 16 & 30 \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+Despu\'es de mirar la tabla por un tiempo y probar varias relaciones que
+funcionaban para algunos casos pero para otros no me pareci\'o notar que se
+cumpl\'ia
+\begin{displaymath}
+\sum_{k=0}^{2} k^2 = 2.g(2) - \sum_{k=0}^{2-1} g(k) =
+2.g(2) - g(0) - g(1) =
+6 - 0 - 1 = 5
+\end{displaymath}
+Lo que era a\'un m\'as interesante es que se cumpl\'ia para todos los casos
+que ten\'ia escritos, m\'as generalmente
+\begin{equation}
+\sum_{k=0}^{n} k^2 = n.g(n) - \sum_{k=0}^{n-1} g(k)
+\end{equation}
+Que reemplazando por las funciones originales queda
+\begin{equation}
+\sum_{k=0}^{n} k^2 = n.\left(\frac{n.(n+1)}{2}\right) -
+\sum_{k=0}^{n-1} \frac{(k+1).k}{2}
+\end{equation}
+En este punto me frustr\'e un poco porque vi que lo mismo que quer\'ia
+probar estaba practicamente igual dentro de la soluci\'on pero despu\'es
+record\'e un truco que usabamos para resolver integrales y empec\'e a
+reducir la expresi\'on
+\begin{displaymath}
+\sum_{k=0}^{n} k^2 = n.\left(\frac{n.(n+1)}{2}\right) -
+\sum_{k=0}^{n-1} \frac{(k+1).k}{2} \Longleftrightarrow
+\end{displaymath}
+\begin{displaymath}
+\sum_{k=0}^{n} k^2 = n.\left(\frac{n^2 + n}{2}\right) -
+\sum_{k=0}^{n-1} \frac{k^2 + k}{2} \Longleftrightarrow
+\end{displaymath}
+\begin{displaymath}
+\sum_{k=0}^{n} k^2 = \frac{n^3 + n^2}{2} -
+\frac{1}{2} \left( \sum_{k=0}^{n-1} k^2 + k \right) \Longleftrightarrow
+\end{displaymath}
+\begin{displaymath}
+\sum_{k=0}^{n} k^2 = \frac{n^3 + n^2}{2} -
+\frac{1}{2} \sum_{k=0}^{n-1} k^2 - 
+\frac{1}{2} \sum_{k=0}^{n-1} k
+\end{displaymath}
+Ahora puedo reducir la sumatoria de $0$ hasta $n-1$ usando la f\'ormula de
+Gauss
+\begin{displaymath}
+\sum_{k=0}^{n} k^2 = \frac{n^3 + n^2}{2} -
+\frac{1}{2} \frac{(n-1).n}{2} -
+\frac{1}{2} \sum_{k=0}^{n-1} k^2 \Longleftrightarrow
+\end{displaymath}
+\begin{displaymath}
+\sum_{k=0}^{n} k^2 = \frac{n^3 + n^2}{2} -
+\frac{n^2 - n}{4} -
+\frac{1}{2} \sum_{k=0}^{n-1} k^2 \Longleftrightarrow
+\end{displaymath}
+\begin{displaymath}
+\sum_{k=0}^{n} k^2 = \frac{2n^3 + 2n^2 - n^2 + n}{4} -
+\frac{1}{2} \sum_{k=0}^{n-1} k^2 \Longleftrightarrow
+\end{displaymath}
+\begin{displaymath}
+\sum_{k=0}^{n} k^2 = \frac{2n^3 + n^2 + n}{4} -
+\frac{1}{2} \sum_{k=0}^{n-1} k^2
+\end{displaymath}
+Ahora tengo que sumar y restar un t\'ermino m\'as de la sumatoria de la
+derecha del igual para que quede algo igual a lo de la izquierda del igual
+\begin{displaymath}
+\sum_{k=0}^{n} k^2 = \frac{2n^3 + n^2 + n}{4} +
+\frac{1}{2} n^2 - \frac{1}{2} \sum_{k=0}^{n} k^2
+\end{displaymath}
+Pasando la sumatoria para el otro lado ahora me queda
+\begin{displaymath}
+\frac{3}{2} \sum_{k=0}^{n} k^2 = \frac{2n^3 + n^2 + n}{4} +
+\frac{1}{2} n^2 \Longleftrightarrow
+\end{displaymath}
+\begin{equation}
+\sum_{k=0}^{n} k^2 = \frac{2n^3 + 3n^2 + n}{6}
+\end{equation}
+
+\section{Demostraci\'on}
+Para probar que la f\'ormula vale para todos los naturales (y el $0$) us\'e
+el m\'etodo de inducci\'on:
+\begin{equation}
+P(0) \longrightarrow \sum_{k=0}^{n} k^2 = \frac{2n^3 + 3n^2 +n}{6}
+\Longleftrightarrow 0 = 0
+\end{equation}
+Ahora usando como Hip\'otesis Inductiva que
+\begin{displaymath}
+\sum_{k=0}^{n} k^2 = \frac{2n^3 + 3n^2 +n}{6}
+\end{displaymath}
+Debo probar que
+\begin{displaymath}
+\sum_{k=0}^{n+1} k^2 = \frac{2(n+1)^3 + 3(n+1)^2 + (n+1)}{6} \Longleftrightarrow
+\end{displaymath}
+\begin{displaymath}
+6 \sum_{k=0}^{n} k^2 + 6(n+1)^2 = 2(n+1)^3 + 3(n+1)^2 + (n+1) \Longleftrightarrow
+\end{displaymath}
+\begin{displaymath}
+6 \sum_{k=0}^{n} k^2 + 6(n+1)^2 = 2(n+1)^2(n+1) + 3(n^2 + 2n + 1) + (n + 1) \Longleftrightarrow
+\end{displaymath}
+\begin{displaymath}
+6 \sum_{k=0}^{n} k^2 + 6(n+1)^2 = 2(n^2 + 2n + 1)(n+1) + 3(n^2 + 2n + 1) + (n + 1) \Longleftrightarrow
+\end{displaymath}
+\begin{displaymath}
+6 \sum_{k=0}^{n} k^2 + 6(n+1)^2 = 2(n^3 + n^2 + 2n^2 + 2n + n + 1) + 3(n^2 + 2n + 1) + (n + 1) \Longleftrightarrow
+\end{displaymath}
+\begin{displaymath}
+6 \sum_{k=0}^{n} k^2 + 6(n+1)^2 = 2(n^3 + 3n^2 + 3n + 1) + 3(n^2 + 2n + 1) + (n + 1) \Longleftrightarrow
+\end{displaymath}
+\begin{displaymath}
+6 \sum_{k=0}^{n} k^2 + 6(n+1)^2 = 2n^3 + 6n^2 + 6n + 2 + 3n^2 + 6n + 3 + n + 1 \Longleftrightarrow
+\end{displaymath}
+\begin{displaymath}
+6 \sum_{k=0}^{n} k^2 + 6(n+1)^2 = 2n^3 + 9n^2 + 13n + 6 \Longleftrightarrow
+\end{displaymath}
+\begin{displaymath}
+6 \sum_{k=0}^{n} k^2 + 6(n^2 + 2n + 1) = 2n^3 + 9n^2 + 13n + 6 \Longleftrightarrow
+\end{displaymath}
+\begin{displaymath}
+6 \sum_{k=0}^{n} k^2 = 2n^3 + 9n^2 + 13n + 6 - 6n^2 - 12n - 6\Longleftrightarrow
+\end{displaymath}
+\begin{displaymath}
+\sum_{k=0}^{n} k^2 = \frac{2n^3 + 3n^2 + n}{6}
+\end{displaymath}
+Y esto es cierto por Hip\'otesis Inductiva, queda probado que la f\'ormula vale
+para todo n\'umero natural o cero.
+
+\end{document}
